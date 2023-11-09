@@ -1,0 +1,43 @@
+.lauches {
+   width: 50%;
+   min-width: 32rem;
+   margin: 2rem auto 2rem;
+   padding: 1rem 4rem;
+   border: 1px solid gray;
+
+   p {
+      margin-bottom: .6rem;
+      line-height: 1.5;
+   }
+
+}
+
+form {
+   margin: 0 auto;
+   fieldset {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: none;
+      margin: .4rem auto;
+      // width: 90%;
+
+      input {
+         width: 8rem;
+         height: 2.7rem;
+      }
+   }
+
+   button {
+      border: 1px solid gray;
+      height: 3rem;
+      width: 9rem;
+      background-color: transparent;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      &:active {
+         background-color: gray;
+      }
+   }
+}
+
