@@ -30,12 +30,6 @@ function useLaunches(onSuccessSound: soundType, onAbortSound: soundType, onFailu
       const mission = data.get("mission-name");
       const rocket = data.get("rocket-name");
       const destination = data.get("planets-selector");
-      console.log({
-         launchDate,
-         mission,
-         rocket,
-         destination,
-      })
       const response = await httpSubmitLaunch({
          launchDate,
          mission,
@@ -64,7 +58,7 @@ function useLaunches(onSuccessSound: soundType, onAbortSound: soundType, onFailu
       const response = await httpAbortLaunch(id);
 
       // TODO: Set success based on response.
-      const success = false;
+      const success = response.ok;
       if (success) {
          getLaunches();
          onAbortSound();

@@ -1,6 +1,7 @@
 .history__item {
    display: grid;
    grid-template-columns: .1fr .15fr .25fr .25fr .25fr .1fr;
+   align-items: center;
    margin-bottom: 1rem;
 
    & button {
@@ -9,5 +10,13 @@
       border-radius: 0;
       border: 1px solid black;
 
+   }
+
+   & span {
+      $size: .6rem;
+      width: $size;
+      height: $size;
+      border-radius: 50%;
+      display: block;
    }
 }

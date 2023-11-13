@@ -9,7 +9,7 @@ export type LaunchType = {
    success: boolean | undefined;
 }
 
-export type LaunchData =Omit<LaunchType, "success" | "upcoming" | "customer" | "flightNumber">;
+export type LaunchData = Omit<LaunchType, "success" | "upcoming" | "customer" | "flightNumber">;
 
 type OutgoingLaunchData = {
    launchDate: FormDataEntryValue | null,
@@ -20,25 +20,25 @@ type OutgoingLaunchData = {
 
 const API_URL = 'http://localhost:8000';
 
-async function httpGetPlanets(): Promise<{kepler_name: string}[]> {
+async function httpGetPlanets(): Promise<{ kepler_name: string }[]> {
    const resp = await fetch(`${API_URL}/planets`);
-   const data:{kepler_name: string}[]  = await resp.json();
+   const data: { kepler_name: string }[] = await resp.json();
    return data
-  // TODO: Once API is ready.
-  // Load planets and return as JSON.
+   // TODO: Once API is ready.
+   // Load planets and return as JSON.
 }
 
 async function httpGetLaunches(): Promise<LaunchType[]> {
-  // TODO: Once API is ready.
-  // Load launches, sort by flight number, and return as JSON.
-  const response = await fetch(`${API_URL}/launches`);
-  const fetchedLaunches:LaunchType[] = await response.json();
-  return fetchedLaunches.sort((a,b) => {
-     return a.flightNumber - b.flightNumber;
-  }) 
+   // TODO: Once API is ready.
+   // Load launches, sort by flight number, and return as JSON.
+   const response = await fetch(`${API_URL}/launches`);
+   const fetchedLaunches: LaunchType[] = await response.json();
+   return fetchedLaunches.sort((a, b) => {
+      return a.flightNumber - b.flightNumber;
+   })
 }
 
-async function httpSubmitLaunch(launch:OutgoingLaunchData): Promise<Response | {ok: false}> {
+async function httpSubmitLaunch(launch: OutgoingLaunchData): Promise<Response | Pick<Response, "ok">> {
    try {
       return await fetch(`${API_URL}/launches`, {
          method: "post",
@@ -47,23 +47,32 @@ async function httpSubmitLaunch(launch:OutgoingLaunchData): Promise<Response | {
          },
          body: JSON.stringify(launch)
       })
-   } catch(err) {
+   } catch (err) {
       return {
          ok: false,
       }
    }
-  // TODO: Once API is ready.
-  // Submit given launch data to launch system.
+   // TODO: Once API is ready.
+   // Submit given launch data to launch system.
 }
 
 async function httpAbortLaunch(id: number) {
-  // TODO: Once API is ready.
-  // Delete launch with given ID.
+   // TODO: Once API is ready.
+   // Delete launch with given ID.
+   try {
+      return await fetch(`${API_URL}/launches/${id}`, {
+         method: "delete"
+      })
+   } catch (error) {
+      return {
+         ok: false
+      }
+   }
 }
 
 export {
-  httpGetPlanets,
-  httpGetLaunches,
-  httpSubmitLaunch,
-  httpAbortLaunch,
+   httpGetPlanets,
+   httpGetLaunches,
+   httpSubmitLaunch,
+   httpAbortLaunch,
 };

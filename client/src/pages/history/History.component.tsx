@@ -8,6 +8,7 @@ function History({ launches }: { launches: LaunchType[] }) {
 		() => launches?.filter((launch) => !launch.upcoming),
 		[launches]
 	);
+   console.log(historyLaunches)
 	return (
 		<div className="history">
 			<p>
@@ -24,11 +25,15 @@ function History({ launches }: { launches: LaunchType[] }) {
 				</div>
 				{historyLaunches?.map((item) => (
 					<HistoryItem
+                  key={item.flightNumber}
 						flightNumber={item.flightNumber}
 						lauchDate={item.launchDate}
 						destination={item.destination}
+                  customer={item.customer.join(",")}
 						mission={item.mission}
 						rocket={item.rocket}
+                  isUpcoming={item.upcoming}
+                  success={item.success == undefined? false : item.success}
 					/>
 				))}
 			</div>

@@ -7,14 +7,13 @@ export type LaunchType = {
    customer: string[];
    upcoming: boolean;
    success: boolean | undefined;
-}
+};
 
-export type IncomingLaunchData =Omit<LaunchType, "success" | "upcoming" | "customer" | "flightNumber">;
+export type IncomingLaunchData = Omit<LaunchType, "success" | "upcoming" | "customer" | "flightNumber">;
 
 const launches = new Map<number, LaunchType>()
 
 
-let latestFlightNumber = 100;
 
 // const launch = {
 //    flightNumber: 100,
@@ -22,25 +21,27 @@ let latestFlightNumber = 100;
 //    rocket: "Explorer Is1",
 //    launchDate: new Date('December 27, 2030'),
 //    destination: "Kepler-442 b",
-//    customer: ['ZTM', 'NASA'],
+//    customer: ['ZTM', 'NsASA'],
 //    upcoming: true,
 //    success: true
 // };
 
-// launches.set(launch.flightNumber, launch);
+
+export function getLauchFlightNumber() { return launches.size === 0 ? 1 : launches.size * 100 };
 
 export function convertMapValueToArray() {
    return Array.from(launches.values())
 }
 
 export function addNewLaunch(launch: IncomingLaunchData) {
-   latestFlightNumber++;
-   launches.set(latestFlightNumber, Object.assign(launch, {
+   const newLaunch =  Object.assign(launch, {
       upcoming: true,
       success: undefined,
       customer: ["ZTM", "NASA"],
-      flightNumber: latestFlightNumber
-   }))
+      flightNumber: getLauchFlightNumber()
+   })
+   launches.set(newLaunch.flightNumber, newLaunch);
+   return newLaunch
 }
 
 export function isLauchMissionValid(launch: IncomingLaunchData): boolean {
@@ -52,6 +53,19 @@ export function isLauchMissionValid(launch: IncomingLaunchData): boolean {
       }
    })
    return isValid;
+}
+
+export function abortLaunchById(launchId: number) {
+   const aborted = launches.get(launchId);
+   if (aborted) {
+      aborted.upcoming = false;
+      aborted.success = false;
+   }
+   return aborted;
+}
+
+export function launchExits(launchId: number) {
+   return launches.has(launchId)
 }
 
 export default launches;

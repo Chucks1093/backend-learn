@@ -1,17 +1,19 @@
-import { useMemo } from "react";
+import { useMemo, MouseEventHandler } from "react";
 import "./upcoming.scss";
 import HistoryItem from "../../components/historyItem/HistoryItem.component";
 import { LaunchType } from "../../hooks/requests";
 
+
 type UpcomingProps = {
 	launches: LaunchType[];
-	abortLaunch: (id: any) => Promise<void>;
+	abortLaunch: (id: number)=>Promise<void>;
 };
 function Upcoming({ launches, abortLaunch }: UpcomingProps) {
 	const upcomingLaunches = useMemo(
 		() => launches?.filter((launch) => launch.upcoming),
 		[launches, abortLaunch]
 	);
+   console.log(upcomingLaunches)
 
 	return (
 		<div className="upcoming">
@@ -30,10 +32,15 @@ function Upcoming({ launches, abortLaunch }: UpcomingProps) {
 				</div>
 				{upcomingLaunches?.map((launch) => (
 					<HistoryItem
+                  key={launch.flightNumber}
 						flightNumber={launch.flightNumber}
 						lauchDate={launch.launchDate}
 						mission={launch.mission}
 						rocket={launch.rocket}
+                  isUpcoming={launch.upcoming}
+                  customer={launch.customer.join(",")}
+                  success={launch.success == undefined?false : launch.success}
+                  handleClick={abortLaunch}
 						destination={launch.destination}
 					/>
 				))}

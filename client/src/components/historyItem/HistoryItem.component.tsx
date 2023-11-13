@@ -1,12 +1,17 @@
+
 import "./historyItem.styles.scss";
 
 type HistoryItemProps = {
-   flightNumber: number;
-   lauchDate: string;
-   mission: string;
-   rocket: string;
-   destination: string;
-}
+	flightNumber: number;
+   customer: string;
+	lauchDate: string;
+	mission: string;
+	rocket: string;
+	destination: string;
+	isUpcoming: boolean;
+	handleClick?: (id: number) => Promise<void>;
+   success: boolean;
+};
 
 function HistoryItem(props: HistoryItemProps) {
 	return (
@@ -15,8 +20,18 @@ function HistoryItem(props: HistoryItemProps) {
 			<p>{new Date(props.lauchDate).toDateString()}</p>
 			<p>{props.mission}</p>
 			<p>{props.rocket}</p>
-			<p>{props.destination}</p>
-         <button>✖</button>
+			<p>{props.isUpcoming ? props.destination : props.customer}</p>
+			{props.isUpcoming ? (
+				<button
+					onClick={() =>
+						props.handleClick
+							? props.handleClick(props.flightNumber)
+							: null
+					}
+				>
+					✖
+				</button>
+			) : <span style={{backgroundColor: props.success ? "green" : "red"}} />}
 		</div>
 	);
 }
