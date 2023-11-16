@@ -5,8 +5,8 @@ import path from "path";
 type PlanetType = {
    koi_name: string;
    koi_insol: number;
-   koi_pras: number;
-   koi_description: string;
+   koi_prad: number;
+   koi_disposition: string;
 }
 
 const habitablePlanets: PlanetType[] = [];
@@ -18,9 +18,10 @@ function isPlanetHabitable(planet: PlanetType) {
 }
 
 
-const filePath = path.join(__dirname, "..", "..", "data", "kepler_data.csv")
+
 
 const readFileUsingStream =() =>{
+   const filePath = path.join(__dirname, "..", "..", "data", "kepler_data.csv")
    return new Promise((resolve, reject)=> {
       fs.createReadStream(filePath)
       .pipe(parse({

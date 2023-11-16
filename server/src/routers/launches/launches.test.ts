@@ -17,8 +17,8 @@ const postLauchData: LaunchWithDateAsString = {
    destination: "Kepler-186 f",
 };
 
-const {launchDate, ...launchDataWithoutDate} = postLauchData;
-const {mission, ...launchWithMissingProperty}= postLauchData
+const { launchDate, ...launchDataWithoutDate } = postLauchData;
+const { mission, ...launchWithMissingProperty } = postLauchData
 
 const responselaunchData: LaunchType = {
    ...postLauchData,
@@ -48,16 +48,16 @@ describe("Test POST /launch", () => {
          .expect(201)
 
       const requestDate = new Date(postLauchData.launchDate)
-      const responseDate = new Date(response.body.launchDate)  
+      const responseDate = new Date(response.body.launchDate)
       expect(responseDate).toStrictEqual(requestDate)
       expect<LaunchType>({ ...response.body, success: undefined, launchDate: responseDate }).toMatchObject(responselaunchData)
    })
 
    test("Catch launch with missing property", async () => {
       const response = await request(app).post("/launches")
-      .send(launchWithMissingProperty)
-      .expect("Content-Type", /json/)
-      .expect(400)
+         .send(launchWithMissingProperty)
+         .expect("Content-Type", /json/)
+         .expect(400)
 
       console.log(response.body)
 
@@ -67,9 +67,9 @@ describe("Test POST /launch", () => {
    })
 
    test("Catch Invalid dates", async () => {
-      const response = await request(app).post("/launches").send({...launchDataWithoutDate, launchDate: "Robert"})
-      .expect("Content-Type", /json/)
-      .expect(400)
+      const response = await request(app).post("/launches").send({ ...launchDataWithoutDate, launchDate: "Robert" })
+         .expect("Content-Type", /json/)
+         .expect(400)
       expect(response.body).toStrictEqual({
          error: "Invalid Launch Date",
       })

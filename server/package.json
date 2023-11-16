@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "start": "nodemon"
+    "start": "nodemon",
+    "cluster": "pm2 start src/server.ts -i max"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+     "pm2": "^5.3.0",
     "@types/node": "^20.9.0",
     "@types/supertest": "^2.0.16",
     "cors": "^2.8.5",
